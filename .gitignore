@@ -12,13 +12,7 @@ ehthumbs.db
 /root/
 
 # Build artifacts
-src/*.tar.gz
-src/*.tar.bz2
-src/*.tar.xz
-src/*.tgz
-src/*.zip
-src/*.phar
-!src/probe.zip
+src/*.php
 
 # IDE
 .vscode/
