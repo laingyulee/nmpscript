@@ -608,9 +608,9 @@ Get_Official_URL()
         */lib/boost/boost_*.tar.bz2)
             local ver2="${filename#boost_}"; ver2="${ver2%.tar.bz2}"; ver2="${ver2//_/.}"
             echo "https://archives.boost.io/release/${ver2}/source/${filename}" ;;
-        */libmemcached/libmemcached-*.tar.gz)
-            local ver="${filename#libmemcached-}"; ver="${ver%.tar.gz}"
-            echo "https://launchpad.net/libmemcached/1.0/${ver}/+download/${filename}" ;;
+        */libmemcached/libmemcached-awesome-*.tar.gz)
+            local ver="${filename#libmemcached-awesome-}"; ver="${ver%.tar.gz}"
+            echo "https://github.com/awesomized/libmemcached/releases/download/${ver}/${filename}" ;;
         */memcached/memcached-*.tar.gz)
             echo "https://www.memcached.org/files/${filename}" ;;
         */fail2ban/fail2ban-*.tar.gz)
