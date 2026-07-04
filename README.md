@@ -2,17 +2,18 @@
 
 一键安装 **Nginx + MariaDB + PHP** 环境脚本
 
-LNMP  Fork，仅支持 PHP 8.1+ 和 MariaDB。
+LNMP Fork，仅支持 PHP 8.1+ 和 MariaDB。
 
 ## 组件版本
 
 | 组件 | 版本 | 说明 |
 |------|------|------|
-| Nginx | 1.30.3 | HTTP/2 新语法 `listen 443 ssl; http2 on;` |
+| Nginx | 1.30.3 | 稳定版 |
 | MariaDB | 10.5.24 / 10.6.17 / 10.11.18 | 三选一 |
-| PHP | 8.1.28 / 8.2.19 / 8.3.32 / 8.4.22 | 四选一，默认 8.3 |
+| PHP | 8.1.28 / 8.2.19 / 8.3.32 / 8.4.22 | 四选一，默认 8.4 |
 | Apache | 2.4.68 | LNMPA / LAMP 模式可选 |
 | phpMyAdmin | 5.2.1 | |
+| libmemcached | 1.1.4 (libmemcached-awesome) | 活跃维护分支 |
 | Redis / Memcached / ImageMagick / ionCube / etc. | | 通过 `addons.sh` 安装 |
 
 ## 系统要求
@@ -22,6 +23,33 @@ LNMP  Fork，仅支持 PHP 8.1+ 和 MariaDB。
 - 已安装 `wget`、`curl`、`tar`
 
 ## 安装
+
+### 使用 screen 避免断线（推荐）
+
+长时间编译过程中，如果 SSH 连接中断会导致安装失败。建议使用 `screen` 创建虚拟终端：
+
+```bash
+# 安装 screen（如果未安装）
+# CentOS/Rocky/AlmaLinux
+yum install screen -y
+
+# Debian/Ubuntu
+apt-get install screen -y
+
+# 创建新的 screen 会话
+screen -S lnmp
+
+# 查看当前会话列表
+screen -ls
+
+# 重新连接会话
+screen -r lnmp
+
+# 分离会话（按 Ctrl+A 然后按 D）
+# 退出会话（在会话内执行 exit）
+```
+
+### 安装步骤
 
 ```bash
 # 下载
@@ -38,7 +66,7 @@ chmod +x install.sh
 ```bash
 # lnmp.conf 预设示例
 DBSelect="3"       # MariaDB 10.11
-PHPSelect="3"      # PHP 8.3
+PHPSelect="4"      # PHP 8.4
 SelectMalloc="1"   # 不安装 Jemalloc/TCMalloc
 ```
 
@@ -104,7 +132,8 @@ lnmp vhost del      # 删除
 ## 与原始 LNMP 的区别
 
 - ✅ 所有下载源替换为官方 URL，不再依赖失效镜像站
-- ✅ 默认 PHP 版本 8.3.32
+- ✅ 默认 PHP 版本 8.4.22
+- ✅ libmemcached 升级为 libmemcached-awesome 活跃维护分支
 
 ## License
 

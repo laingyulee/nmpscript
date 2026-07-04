@@ -356,7 +356,7 @@
         <!-- 文档头部 -->
         <header class="doc-header">
             <h1 class="doc-title">NMPScript 使用文档</h1>
-            <p class="doc-version">版本 2.1 | 最后更新: 2026年7月</p>
+            <p class="doc-version">版本 1.0 | 最后更新: 2026年7月4日</p>
         </header>
 
         <!-- 简介 -->
@@ -561,6 +561,52 @@ cd nmpscript-main</code>
                             </tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3 class="subsection-title">使用 screen 防止编译断线</h3>
+                <div class="content">
+                    <p>源码编译安装可能需要 1-3 小时，期间如果 SSH 连接中断会导致安装失败。建议使用 <code class="inline">screen</code> 创建虚拟终端来保持会话。</p>
+                    
+                    <div class="tip tip-warning">
+                        <div class="tip-title">重要</div>
+                        <div class="tip-content">使用二进制安装时通常不需要 screen（仅需 10-30 分钟），但建议在不稳定的网络环境下始终使用。</div>
+                    </div>
+                    
+                    <p><strong>安装 screen：</strong></p>
+                    <div class="code-block">
+                        <code># CentOS / Rocky Linux / AlmaLinux
+yum install screen -y
+
+# Debian / Ubuntu
+apt-get install screen -y</code>
+                    </div>
+                    
+                    <p><strong>创建虚拟终端会话：</strong></p>
+                    <div class="code-block">
+                        <code># 创建名为 lnmp 的会话
+screen -S lnmp</code>
+                    </div>
+                    
+                    <p><strong>在会话中执行安装脚本：</strong></p>
+                    <div class="code-block">
+                        <code>chmod +x install.sh
+./install.sh lnmp</code>
+                    </div>
+                    
+                    <p><strong>常用 screen 命令：</strong></p>
+                    <ul>
+                        <li><code class="inline">Ctrl + A</code> 然后按 <code class="inline">D</code> - 分离会话（保持后台运行）</li>
+                        <li><code class="inline">screen -ls</code> - 查看所有会话列表</li>
+                        <li><code class="inline">screen -r lnmp</code> - 重新连接到名为 lnmp 的会话</li>
+                        <li><code class="inline">exit</code> - 在会话内执行，关闭当前会话</li>
+                    </ul>
+                    
+                    <div class="tip">
+                        <div class="tip-title">提示</div>
+                        <div class="tip-content">如果 SSH 连接中断，只需重新登录服务器，然后执行 <code class="inline">screen -r lnmp</code> 即可恢复安装进程。</div>
+                    </div>
                 </div>
             </div>
 
@@ -823,6 +869,11 @@ cd nmpscript-main</code>
                                 <td>5.2.1</td>
                                 <td>-</td>
                             </tr>
+                            <tr>
+                                <td>libmemcached</td>
+                                <td>1.1.4 (libmemcached-awesome)</td>
+                                <td>-</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -909,7 +960,7 @@ cd nmpscript-main</code>
             <div class="subsection">
                 <h3 class="subsection-title">lnmp 命令不存在</h3>
                 <div class="content">
-                    <p>如果使用 <code class="inline">./install.sh db</code> 单独安装数据库，不会创建 lnmp 命令。</p>
+                    <p>如果使用 <code class="inline">./install.sh nginx</code> 或 <code class="inline">./install.sh db</code> 单独安装数据库，不会创建 lnmp 命令。</p>
                     <p>解决方案：</p>
                     <ul>
                         <li>使用完整安装：<code class="inline">./install.sh lnmp</code></li>
