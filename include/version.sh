@@ -52,7 +52,7 @@ APR_Util_Ver='apr-util-1.6.3'
 Apache_Ver='httpd-2.4.68'
 
 Pureftpd_Ver='pure-ftpd-1.0.49'
-ImageMagick_Ver='ImageMagick-7.1.1-8'
+ImageMagick_Ver='ImageMagick-7.1.2-23'
 Imagick_Ver='imagick-3.7.0'
 Redis_Stable_Ver='redis-7.0.11'
 PHPRedis_Ver='redis-6.3.0'
