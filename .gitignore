@@ -13,6 +13,13 @@ ehthumbs.db
 
 # Build artifacts
 src/*.php
+src/*.tar.gz
+src/*.tar.bz2
+src/*.tar.xz
+src/*.tgz
+src/*.rpm
+src/*.phar
+
 
 # IDE
 .vscode/
