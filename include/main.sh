@@ -623,7 +623,7 @@ Get_Official_URL()
             local name="${filename%-*}"; local ver="${filename#*-}"; ver="${ver%.*}"
             echo "https://pecl.php.net/get/${filename}" ;;
         */imagemagick/ImageMagick-*.tar.xz|*/imagemagick/ImageMagick-*.tar.gz)
-            echo "https://imagemagick.org/archive/releases/${filename}" ;;
+            echo "https://download.imagemagick.org/archive/${filename}" ;;
         */ioncube/ioncube_loaders_lin_*.tar.gz)
             echo "https://downloads.ioncube.com/loader_downloads/${filename}" ;;
         */composer/composer-*.phar)
