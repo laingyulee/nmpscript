@@ -710,7 +710,7 @@ Check_LNMPConf()
         Echo_Red "lnmp.conf was not exsit!"
         exit 1
     fi
-    if [[ "${Download_Mirror}" = "" || "${MySQL_Data_Dir}" = "" || "${MariaDB_Data_Dir}" = "" || "${Default_Website_Dir}" = "" ]]; then
+    if [[ "${MySQL_Data_Dir}" = "" || "${MariaDB_Data_Dir}" = "" || "${Default_Website_Dir}" = "" ]]; then
         Echo_Red "Can't get values from lnmp.conf!"
         exit 1
     fi
