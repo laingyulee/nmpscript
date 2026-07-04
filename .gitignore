@@ -1,0 +1,26 @@
+# OS files
+Thumbs.db
+.DS_Store
+Desktop.ini
+ehthumbs.db
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+/root/
+
+# Build artifacts
+src/*.tar.gz
+src/*.tar.bz2
+src/*.tar.xz
+src/*.tgz
+src/*.zip
+src/*.phar
+!src/probe.zip
+
+# IDE
+.vscode/
+.idea/
+*.sublime-*

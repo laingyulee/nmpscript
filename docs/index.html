@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NMPScript - Linux Nginx MariaDB PHP 一键安装包文档</title>
+    <meta name="description" content="NMPScript使用文档 - Linux系统Nginx+MariaDB+PHP自动化安装工具">
+    <style>
+        :root {
+            --bg-primary: #1a1a2e;
+            --bg-secondary: #16213e;
+            --bg-tertiary: #0f0f1a;
+            --text-primary: #e4e4e7;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --border: #27272a;
+            --code-bg: #0d0d14;
+            --success: #22c55e;
+            --warning: #eab308;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans SC', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+        }
+
+        /* 导航 */
+        .nav {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        /* 主容器 */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* 文档头部 */
+        .doc-header {
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 2rem;
+        }
+
+        .doc-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .doc-version {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* 章节 */
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 1.5rem;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        /* 子章节 */
+        .subsection {
+            margin-bottom: 2rem;
+        }
+
+        .subsection-title {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        /* 内容段落 */
+        .content p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .content ul, .content ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .content strong {
+            color: var(--text-primary);
+        }
+
+        /* 代码块 */
+        .code-block {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1rem;
+            overflow-x: auto;
+        }
+
+        .code-block code {
+            font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+            font-size: 0.85rem;
+            color: var(--text-primary);
+            white-space: pre;
+        }
+
+        /* 内联代码 */
+        code.inline {
+            background: var(--code-bg);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+            font-size: 0.85rem;
+        }
+
+        /* 表格 */
+        .table-wrapper {
+            overflow-x: auto;
+            margin-bottom: 1rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+        }
+
+        th, td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: var(--bg-tertiary);
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        td {
+            color: var(--text-secondary);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* 提示框 */
+        .tip {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--accent);
+            padding: 1rem 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .tip-warning {
+            border-left-color: var(--warning);
+        }
+
+        .tip-title {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .tip-content {
+            color: var(--text-secondary);
+        }
+
+        /* 步骤列表 */
+        .steps {
+            counter-reset: step;
+        }
+
+        .step {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .step::before {
+            counter-increment: step;
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 2rem;
+            height: 2rem;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: white;
+        }
+
+        .step-title {
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .step-content {
+            color: var(--text-secondary);
+        }
+
+        /* 文件树 */
+        .file-tree {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+        }
+
+        .file-tree-item {
+            padding: 0.25rem 0;
+            color: var(--text-secondary);
+        }
+
+        .file-tree-item.folder {
+            color: var(--accent);
+        }
+
+        /* 页脚 */
+        .footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            padding: 2rem;
+            margin-top: 4rem;
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        .footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .doc-title {
+                font-size: 1.75rem;
+            }
+
+            .section-title {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航 -->
+    <nav class="nav">
+        <div class="nav-content">
+            <div class="nav-logo">NMPScript 文档</div>
+            <div class="nav-links">
+                <a href="#requirements">系统要求</a>
+                <a href="#installation">安装指南</a>
+                <a href="#usage">使用方法</a>
+                <a href="#components">软件版本</a>
+                <a href="#faq">常见问题</a>
+                <a href="https://github.com/laingyulee/nmpscript" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主内容 -->
+    <div class="container">
+        <!-- 文档头部 -->
+        <header class="doc-header">
+            <h1 class="doc-title">NMPScript 使用文档</h1>
+            <p class="doc-version">版本 2.1 | 最后更新: 2026年7月</p>
+        </header>
+
+        <!-- 简介 -->
+        <section class="section" id="intro">
+            <h2 class="section-title">简介</h2>
+            <div class="content">
+                <p>NMPScript 是一个用 Shell 脚本编写的 Linux 系统自动化安装工具，可以在 Linux 系统上快速部署 LNMP（Nginx + MariaDB + PHP）、LNMPA（Nginx + Apache + MariaDB + PHP）、LAMP（Apache + MariaDB + PHP）生产环境。</p>
+                
+                <p>主要特点：</p>
+                <ul>
+                    <li>一键安装，无需手动配置</li>
+                    <li>支持多种 PHP 版本（8.1、8.2、8.3、8.4）</li>
+                    <li>支持 MariaDB 10.5、10.6、10.11 版本</li>
+                    <li>支持二进制安装（快速）和源码编译安装</li>
+                    <li>包含常用 PHP 扩展和缓存组件</li>
+                    <li>提供完整的虚拟主机管理功能</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 系统要求 -->
+        <section class="section" id="requirements">
+            <h2 class="section-title">系统要求</h2>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">支持的操作系统</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>操作系统</th>
+                                <th>版本</th>
+                                <th>架构</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>CentOS</td>
+                                <td>7, 8, 9</td>
+                                <td>x86_64, aarch64</td>
+                            </tr>
+                            <tr>
+                                <td>Ubuntu</td>
+                                <td>18.04, 20.04, 22.04, 24.04</td>
+                                <td>x86_64, aarch64</td>
+                            </tr>
+                            <tr>
+                                <td>Debian</td>
+                                <td>10, 11, 12, 13</td>
+                                <td>x86_64, aarch64</td>
+                            </tr>
+                            <tr>
+                                <td>Fedora</td>
+                                <td>35+</td>
+                                <td>x86_64, aarch64</td>
+                            </tr>
+                            <tr>
+                                <td>AlmaLinux</td>
+                                <td>8, 9</td>
+                                <td>x86_64, aarch64</td>
+                            </tr>
+                            <tr>
+                                <td>Rocky Linux</td>
+                                <td>8, 9</td>
+                                <td>x86_64, aarch64</td>
+                            </tr>
+                            <tr>
+                                <td>Amazon Linux</td>
+                                <td>2, 2023</td>
+                                <td>x86_64, aarch64</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3 class="subsection-title">硬件要求</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>安装方式</th>
+                                <th>内存</th>
+                                <th>磁盘空间</th>
+                                <th>安装时间</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>二进制安装</td>
+                                <td>512MB+</td>
+                                <td>2GB+</td>
+                                <td>10-30 分钟</td>
+                            </tr>
+                            <tr>
+                                <td>源码编译</td>
+                                <td>1GB+</td>
+                                <td>5GB+</td>
+                                <td>1-3 小时</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="tip tip-warning">
+                    <div class="tip-title">注意</div>
+                    <div class="tip-content">源码编译安装需要更多资源，建议内存至少 2GB，磁盘空间至少 10GB 以获得更好的编译性能。ARM 架构（aarch64）服务器只能使用源码编译安装 MariaDB。</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 安装指南 -->
+        <section class="section" id="installation">
+            <h2 class="section-title">安装指南</h2>
+
+            <div class="subsection">
+                <h3 class="subsection-title">下载安装包</h3>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-title">克隆项目</div>
+                        <div class="step-content">
+                            <div class="code-block">
+                                <code>wget https://github.com/laingyulee/nmpscript/archive/refs/heads/main.tar.gz
+tar -zxvf main.tar.gz
+cd nmpscript-main</code>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-title">配置安装参数（可选）</div>
+                        <div class="step-content">
+                            <p>编辑 <code class="inline">lnmp.conf</code> 文件自定义安装参数：</p>
+                            <div class="code-block">
+                                <code>vim lnmp.conf</code>
+                            </div>
+                            <p>主要配置项：</p>
+                            <ul>
+                                <li><code class="inline">Nginx_Modules_Options</code> - Nginx 附加模块</li>
+                                <li><code class="inline">PHP_Modules_Options</code> - PHP 附加模块</li>
+                                <li><code class="inline">MariaDB_Data_Directory</code> - 数据库数据目录</li>
+                                <li><code class="inline">Default_Website_Directory</code> - 默认网站目录</li>
+                                <li><code class="inline">Enable_Swap</code> - 是否启用 Swap（内存不足时推荐开启）</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-title">运行安装脚本</div>
+                        <div class="step-content">
+                            <div class="code-block">
+                                <code>chmod +x install.sh
+./install.sh lnmp</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3 class="subsection-title">安装模式选择</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>命令</th>
+                                <th>说明</th>
+                                <th>安装内容</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code class="inline">./install.sh lnmp</code></td>
+                                <td>LNMP 模式</td>
+                                <td>Nginx + MariaDB + PHP</td>
+                            </tr>
+                            <tr>
+                                <td><code class="inline">./install.sh lamp</code></td>
+                                <td>LAMP 模式</td>
+                                <td>Apache + MariaDB + PHP</td>
+                            </tr>
+                            <tr>
+                                <td><code class="inline">./install.sh lnmpa</code></td>
+                                <td>LNMPA 模式</td>
+                                <td>Nginx + Apache + MariaDB + PHP</td>
+                            </tr>
+                            <tr>
+                                <td><code class="inline">./install.sh db</code></td>
+                                <td>仅安装数据库</td>
+                                <td>MariaDB</td>
+                            </tr>
+                            <tr>
+                                <td><code class="inline">./install.sh nginx</code></td>
+                                <td>仅安装 Nginx</td>
+                                <td>Nginx</td>
+                            </tr>
+                            <tr>
+                                <td><code class="inline">./install.sh mphp</code></td>
+                                <td>安装多版本 PHP</td>
+                                <td>PHP（需要先安装 Nginx）</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3 class="subsection-title">安装过程</h3>
+                <div class="content">
+                    <p>安装过程中会提示选择以下内容：</p>
+                    <ol>
+                        <li><strong>数据库版本</strong>：MariaDB 10.5 / 10.6 / 10.11</li>
+                        <li><strong>安装方式</strong>：二进制安装（推荐）或源码编译</li>
+                        <li><strong>PHP 版本</strong>：PHP 8.1 / 8.2 / 8.3 / 8.4</li>
+                        <li><strong>是否启用 InnoDB</strong>：MariaDB 存储引擎</li>
+                        <li><strong>PHP 扩展</strong>：选择需要的 PHP 扩展</li>
+                    </ol>
+                    
+                    <div class="tip">
+                        <div class="tip-title">提示</div>
+                        <div class="tip-content">直接按回车将使用默认推荐配置：MariaDB 10.11（二进制安装）+ PHP 8.4。</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 使用方法 -->
+        <section class="section" id="usage">
+            <h2 class="section-title">使用方法</h2>
+
+            <div class="subsection">
+                <h3 class="subsection-title">服务管理</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>命令</th>
+                                <th>说明</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code class="inline">lnmp start</code></td>
+                                <td>启动所有服务</td>
+                            </tr>
+                            <tr>
+                                <td><code class="inline">lnmp stop</code></td>
+                                <td>停止所有服务</td>
+                            </tr>
+                            <tr>
+                                <td><code class="inline">lnmp restart</code></td>
+                                <td>重启所有服务</td>
+                            </tr>
+                            <tr>
+                                <td><code class="inline">lnmp status</code></td>
+                                <td>查看服务状态</td>
+                            </tr>
+                            <tr>
+                                <td><code class="inline">lnmp killall</code></td>
+                                <td>强制终止所有服务</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3 class="subsection-title">虚拟主机管理</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>命令</th>
+                                <th>说明</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code class="inline">lnmp vhost add</code></td>
+                                <td>添加虚拟主机</td>
+                            </tr>
+                            <tr>
+                                <td><code class="inline">lnmp vhost list</code></td>
+                                <td>列出所有虚拟主机</td>
+                            </tr>
+                            <tr>
+                                <td><code class="inline">lnmp vhost del</code></td>
+                                <td>删除虚拟主机</td>
+                            </tr>
+                            <tr>
+                                <td><code class="inline">lnmp vhost edit</code></td>
+                                <td>编辑虚拟主机配置</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="content">
+                    <p>添加虚拟主机时会提示输入：</p>
+                    <ul>
+                        <li>域名（如 <code class="inline">example.com</code>）</li>
+                        <li>网站根目录</li>
+                        <li>是否启用日志</li>
+                        <li>是否启用 SSL</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3 class="subsection-title">数据库管理</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>命令</th>
+                                <th>说明</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code class="inline">lnmp database add</code></td>
+                                <td>添加数据库</td>
+                            </tr>
+                            <tr>
+                                <td><code class="inline">lnmp database list</code></td>
+                                <td>列出所有数据库</td>
+                            </tr>
+                            <tr>
+                                <td><code class="inline">lnmp database del</code></td>
+                                <td>删除数据库</td>
+                            </tr>
+                            <tr>
+                                <td><code class="inline">lnmp database edit</code></td>
+                                <td>修改数据库用户密码</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3 class="subsection-title">FTP 管理</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>命令</th>
+                                <th>说明</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code class="inline">lnmp ftp add</code></td>
+                                <td>添加 FTP 用户</td>
+                            </tr>
+                            <tr>
+                                <td><code class="inline">lnmp ftp list</code></td>
+                                <td>列出所有 FTP 用户</td>
+                            </tr>
+                            <tr>
+                                <td><code class="inline">lnmp ftp del</code></td>
+                                <td>删除 FTP 用户</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3 class="subsection-title">SSL 证书</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>命令</th>
+                                <th>说明</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code class="inline">lnmp ssl add</code></td>
+                                <td>添加 SSL 证书</td>
+                            </tr>
+                            <tr>
+                                <td><code class="inline">lnmp ssl del</code></td>
+                                <td>删除 SSL 证书</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="content">
+                    <p>支持两种 SSL 证书方式：</p>
+                    <ul>
+                        <li><strong>自签名证书</strong>：快速生成，仅用于测试</li>
+                        <li><strong>Let's Encrypt</strong>：免费自动续期的正式证书</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3 class="subsection-title">文件位置</h3>
+                <div class="file-tree">
+                    <div class="file-tree-item folder">/usr/local/nginx/</div>
+                    <div class="file-tree-item">    conf/          - Nginx 配置目录</div>
+                    <div class="file-tree-item">    html/          - 默认网站目录（已改到 /home/wwwroot/default）</div>
+                    <div class="file-tree-item folder">/usr/local/mariadb/</div>
+                    <div class="file-tree-item">    var/           - 数据库数据目录</div>
+                    <div class="file-tree-item folder">/usr/local/php/</div>
+                    <div class="file-tree-item">    etc/           - PHP 配置目录</div>
+                    <div class="file-tree-item">    lib/php/extensions/ - PHP 扩展目录</div>
+                    <div class="file-tree-item folder">/home/wwwroot/</div>
+                    <div class="file-tree-item">    default/       - 默认网站目录</div>
+                    <div class="file-tree-item">    [domain]/       - 各虚拟主机目录</div>
+                    <div class="file-tree-item folder">/home/wwwlogs/</div>
+                    <div class="file-tree-item">    *.log          - 网站日志文件</div>
+                    <div class="file-tree-item folder">/etc/init.d/</div>
+                    <div class="file-tree-item">    nginx          - Nginx 服务脚本</div>
+                    <div class="file-tree-item">    mariadb        - MariaDB 服务脚本</div>
+                    <div class="file-tree-item">    php-fpm        - PHP-FPM 服务脚本</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 软件版本 -->
+        <section class="section" id="components">
+            <h2 class="section-title">软件版本</h2>
+            
+            <div class="subsection">
+                <h3 class="subsection-title">默认版本</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>软件</th>
+                                <th>默认版本</th>
+                                <th>可选版本</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Nginx</td>
+                                <td>1.30.3</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>MariaDB</td>
+                                <td>10.11.18</td>
+                                <td>10.5, 10.6</td>
+                            </tr>
+                            <tr>
+                                <td>PHP</td>
+                                <td>8.4.22</td>
+                                <td>8.1.28, 8.2.19, 8.3.32</td>
+                            </tr>
+                            <tr>
+                                <td>Apache (可选)</td>
+                                <td>2.4.68</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>phpMyAdmin</td>
+                                <td>5.2.1</td>
+                                <td>-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3 class="subsection-title">可选组件</h3>
+                <div class="content">
+                    <p>安装后可通过 <code class="inline">addons.sh</code> 安装额外组件：</p>
+                    <div class="code-block">
+                        <code>./addons.sh</code>
+                    </div>
+                    <p>可选安装：</p>
+                    <ul>
+                        <li>Redis - 内存缓存</li>
+                        <li>Memcached - 内存缓存</li>
+                        <li>ImageMagick - 图像处理</li>
+                        <li>ionCube Loader - PHP 加密扩展</li>
+                        <li>SourceGuardian Loader - PHP 加密扩展</li>
+                        <li>XCache - PHP 缓存</li>
+                        <li>OPcache - PHP 操作码缓存</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3 class="subsection-title">PHP 扩展</h3>
+                <div class="content">
+                    <p>默认安装的 PHP 扩展：</p>
+                    <ul>
+                        <li>MySQLi, PDO_MySQL - 数据库连接</li>
+                        <li>GD - 图像处理</li>
+                        <li>Curl - HTTP 客户端</li>
+                        <li>JSON, XML - 数据处理</li>
+                        <li>MBString - 多字节字符串</li>
+                        <li>OPcache - 操作码缓存</li>
+                        <li>Zip, Zlib - 压缩</li>
+                    </ul>
+                    
+                    <p>可选安装的 PHP 扩展：</p>
+                    <ul>
+                        <li>Fileinfo - 文件信息</li>
+                        <li>Exif - 图像元数据</li>
+                        <li>IMAP - 邮件协议</li>
+                        <li>LDAP - 目录服务</li>
+                        <li>Bz2 - 压缩</li>
+                        <li>Sodium - 加密</li>
+                        <li>Swoole - 异步网络框架</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 常见问题 -->
+        <section class="section" id="faq">
+            <h2 class="section-title">常见问题</h2>
+
+            <div class="subsection">
+                <h3 class="subsection-title">安装失败：磁盘空间不足</h3>
+                <div class="content">
+                    <p>源码编译安装需要约 5GB 空间，如果空间不足会编译失败。</p>
+                    <p>解决方案：</p>
+                    <ul>
+                        <li>使用二进制安装（仅需约 500MB）</li>
+                        <li>清理系统缓存：<code class="inline">yum clean all</code> 或 <code class="inline">apt clean</code></li>
+                        <li>删除旧编译文件：<code class="inline">rm -rf /tmp/mariadb-* /tmp/php-*</code></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3 class="subsection-title">ARM 架构安装问题</h3>
+                <div class="content">
+                    <p>MariaDB 官方不提供 ARM64 (aarch64) 架构的二进制包，ARM 服务器必须使用源码编译安装。</p>
+                    <p>建议：</p>
+                    <ul>
+                        <li>确保内存至少 2GB</li>
+                        <li>确保磁盘空间至少 10GB</li>
+                        <li>编译时间约 1-2 小时</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3 class="subsection-title">lnmp 命令不存在</h3>
+                <div class="content">
+                    <p>如果使用 <code class="inline">./install.sh db</code> 单独安装数据库，不会创建 lnmp 命令。</p>
+                    <p>解决方案：</p>
+                    <ul>
+                        <li>使用完整安装：<code class="inline">./install.sh lnmp</code></li>
+                        <li>或手动创建：<code class="inline">cp /root/nmpscript-main/conf/lnmp /bin/lnmp && chmod +x /bin/lnmp</code></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3 class="subsection-title">数据库连接失败</h3>
+                <div class="content">
+                    <p>检查 MariaDB 服务状态：</p>
+                    <div class="code-block">
+                        <code>systemctl status mariadb
+# 或
+service mariadb status</code>
+                    </div>
+                    <p>常见原因：</p>
+                    <ul>
+                        <li>服务未启动：<code class="inline">lnmp start</code></li>
+                        <li>密码错误：使用 <code class="inline">lnmp database edit</code> 重置密码</li>
+                        <li>端口未开放：检查防火墙设置</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3 class="subsection-title">PHP 页面空白或 500 错误</h3>
+                <div class="content">
+                    <p>检查 PHP-FPM 服务：</p>
+                    <div class="code-block">
+                        <code>systemctl status php-fpm
+# 查看错误日志
+tail -f /usr/local/php/var/log/php-fpm.log</code>
+                    </div>
+                    <p>常见原因：</p>
+                    <ul>
+                        <li>PHP 扩展缺失：检查需要的扩展是否安装</li>
+                        <li>权限问题：检查网站目录权限</li>
+                        <li>配置错误：检查 php.ini 配置</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3 class="subsection-title">重置 MariaDB root 密码</h3>
+                <div class="content">
+                    <p>使用工具脚本重置密码：</p>
+                    <div class="code-block">
+                        <code>./tools/reset_mysql_root_password.sh</code>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 升级与卸载 -->
+        <section class="section" id="upgrade">
+            <h2 class="section-title">升级与卸载</h2>
+
+            <div class="subsection">
+                <h3 class="subsection-title">升级软件版本</h3>
+                <div class="content">
+                    <p>使用升级脚本：</p>
+                    <div class="code-block">
+                        <code>./upgrade.sh</code>
+                    </div>
+                    <p>可选升级：</p>
+                    <ul>
+                        <li>Nginx 版本</li>
+                        <li>MariaDB 版本</li>
+                        <li>PHP 版本</li>
+                    </ul>
+                    
+                    <div class="tip tip-warning">
+                        <div class="tip-title">升级前注意</div>
+                        <div class="tip-content">升级前请备份数据库和重要配置文件。MariaDB 升级可能需要数据库迁移。</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3 class="subsection-title">卸载 LNMP</h3>
+                <div class="content">
+                    <p>使用卸载脚本：</p>
+                    <div class="code-block">
+                        <code>./uninstall.sh</code>
+                    </div>
+                    <p>卸载过程会：</p>
+                    <ul>
+                        <li>停止所有服务</li>
+                        <li>备份数据库数据（可选）</li>
+                        <li>删除安装的程序文件</li>
+                        <li>保留网站数据和数据库备份</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <p>NMPScript 使用文档</p>
+        <p>项目地址：<a href="https://github.com/laingyulee/nmpscript" target="_blank">github.com/laingyulee/nmpscript</a></p>
+        <p>如有问题请在 GitHub 提交 <a href="https://github.com/laingyulee/nmpscript/issues" target="_blank">Issue</a></p>
+    </footer>
+</body>
+</html>
