@@ -10,8 +10,6 @@ fi
 cur_dir=$(cd "$(dirname "$0")" && pwd)
 Stack=$1
 
-LNMP_Ver='2.0'
-
 . ${cur_dir}/lnmp.conf
 . ${cur_dir}/include/main.sh
 

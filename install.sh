@@ -15,7 +15,6 @@ else
     Stack=$1
 fi
 
-LNMP_Ver='2.1'
 . ${cur_dir}/lnmp.conf
 . ${cur_dir}/include/main.sh
 . ${cur_dir}/include/init.sh
