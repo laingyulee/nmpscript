@@ -95,6 +95,8 @@ Install_MPHP8.1()
     sed -i 's/;cgi.fix_pathinfo=.*/cgi.fix_pathinfo=0/g' ${MPHP_Path}/etc/php.ini
     sed -i 's/max_execution_time =.*/max_execution_time = 300/g' ${MPHP_Path}/etc/php.ini
     sed -i 's/disable_functions =.*/disable_functions = passthru,exec,system,chroot,chgrp,chown,shell_exec,proc_open,proc_get_status,popen,ini_alter,ini_restore,dl,openlog,syslog,readlink,symlink,popepassthru,stream_socket_server/g' ${MPHP_Path}/etc/php.ini
+    sed -i 's/;user_ini.filename =.*/user_ini.filename = ".user.ini"/g' ${MPHP_Path}/etc/php.ini
+    sed -i 's/;user_ini.cache_ttl =.*/user_ini.cache_ttl = 300/g' ${MPHP_Path}/etc/php.ini
 
     cd ${cur_dir}/src
 
@@ -175,6 +177,8 @@ Install_MPHP8.2()
     sed -i 's/;cgi.fix_pathinfo=.*/cgi.fix_pathinfo=0/g' ${MPHP_Path}/etc/php.ini
     sed -i 's/max_execution_time =.*/max_execution_time = 300/g' ${MPHP_Path}/etc/php.ini
     sed -i 's/disable_functions =.*/disable_functions = passthru,exec,system,chroot,chgrp,chown,shell_exec,proc_open,proc_get_status,popen,ini_alter,ini_restore,dl,openlog,syslog,readlink,symlink,popepassthru,stream_socket_server/g' ${MPHP_Path}/etc/php.ini
+    sed -i 's/;user_ini.filename =.*/user_ini.filename = ".user.ini"/g' ${MPHP_Path}/etc/php.ini
+    sed -i 's/;user_ini.cache_ttl =.*/user_ini.cache_ttl = 300/g' ${MPHP_Path}/etc/php.ini
 
     cd ${cur_dir}/src
 
@@ -255,6 +259,8 @@ Install_MPHP8.3()
     sed -i 's/;cgi.fix_pathinfo=.*/cgi.fix_pathinfo=0/g' ${MPHP_Path}/etc/php.ini
     sed -i 's/max_execution_time =.*/max_execution_time = 300/g' ${MPHP_Path}/etc/php.ini
     sed -i 's/disable_functions =.*/disable_functions = passthru,exec,system,chroot,chgrp,chown,shell_exec,proc_open,proc_get_status,popen,ini_alter,ini_restore,dl,openlog,syslog,readlink,symlink,popepassthru,stream_socket_server/g' ${MPHP_Path}/etc/php.ini
+    sed -i 's/;user_ini.filename =.*/user_ini.filename = ".user.ini"/g' ${MPHP_Path}/etc/php.ini
+    sed -i 's/;user_ini.cache_ttl =.*/user_ini.cache_ttl = 300/g' ${MPHP_Path}/etc/php.ini
 
     cd ${cur_dir}/src
 
@@ -335,6 +341,8 @@ Install_MPHP8.4()
     sed -i 's/;cgi.fix_pathinfo=.*/cgi.fix_pathinfo=0/g' ${MPHP_Path}/etc/php.ini
     sed -i 's/max_execution_time =.*/max_execution_time = 300/g' ${MPHP_Path}/etc/php.ini
     sed -i 's/disable_functions =.*/disable_functions = passthru,exec,system,chroot,chgrp,chown,shell_exec,proc_open,proc_get_status,popen,ini_alter,ini_restore,dl,openlog,syslog,readlink,symlink,popepassthru,stream_socket_server/g' ${MPHP_Path}/etc/php.ini
+    sed -i 's/;user_ini.filename =.*/user_ini.filename = ".user.ini"/g' ${MPHP_Path}/etc/php.ini
+    sed -i 's/;user_ini.cache_ttl =.*/user_ini.cache_ttl = 300/g' ${MPHP_Path}/etc/php.ini
 
     cd ${cur_dir}/src
 
