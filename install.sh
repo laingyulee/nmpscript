@@ -16,16 +16,16 @@ else
 fi
 
 LNMP_Ver='2.1'
-. lnmp.conf
-. include/main.sh
-. include/init.sh
-. include/mariadb.sh
-. include/php.sh
-. include/nginx.sh
-. include/apache.sh
-. include/end.sh
-. include/only.sh
-. include/multiplephp.sh
+. ${cur_dir}/lnmp.conf
+. ${cur_dir}/include/main.sh
+. ${cur_dir}/include/init.sh
+. ${cur_dir}/include/mariadb.sh
+. ${cur_dir}/include/php.sh
+. ${cur_dir}/include/nginx.sh
+. ${cur_dir}/include/apache.sh
+. ${cur_dir}/include/end.sh
+. ${cur_dir}/include/only.sh
+. ${cur_dir}/include/multiplephp.sh
 
 Get_Dist_Name
 

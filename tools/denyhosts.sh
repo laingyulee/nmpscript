@@ -7,8 +7,9 @@ if [ $(id -u) != "0" ]; then
     exit 1
 fi
 
-. ../lnmp.conf
-. ../include/main.sh
+cur_dir=$(cd "$(dirname "$0")" && pwd)
+. ${cur_dir}/../lnmp.conf
+. ${cur_dir}/../include/main.sh
 Get_Dist_Name
 Get_Dist_Version
 

@@ -19,9 +19,9 @@ echo "+----------------------------------------------------------+"
 cur_dir=$(cd "$(dirname "$0")" && pwd)
 action=$1
 
-. lnmp.conf
-. include/main.sh
-. include/init.sh
+. ${cur_dir}/lnmp.conf
+. ${cur_dir}/include/main.sh
+. ${cur_dir}/include/init.sh
 
 Get_Dist_Name
 

@@ -12,8 +12,8 @@ Stack=$1
 
 LNMP_Ver='2.0'
 
-. lnmp.conf
-. include/main.sh
+. ${cur_dir}/lnmp.conf
+. ${cur_dir}/include/main.sh
 
 shopt -s extglob
 

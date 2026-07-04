@@ -11,23 +11,23 @@ cur_dir=$(cd "$(dirname "$0")" && pwd)
 action=$1
 action2=$2
 
-. lnmp.conf
-. include/main.sh
-. include/init.sh
-. include/version.sh
-. include/memcached.sh
-. include/redis.sh
-. include/imageMagick.sh
-. include/ionCube.sh
-. include/apcu.sh
-. include/php_exif.sh
-. include/php_fileinfo.sh
-. include/php_ldap.sh
-. include/php_bz2.sh
-. include/php_sodium.sh
-. include/php_imap.sh
-. include/php_swoole.sh
-. include/php_SourceGuardian.sh
+. ${cur_dir}/lnmp.conf
+. ${cur_dir}/include/main.sh
+. ${cur_dir}/include/init.sh
+. ${cur_dir}/include/version.sh
+. ${cur_dir}/include/memcached.sh
+. ${cur_dir}/include/redis.sh
+. ${cur_dir}/include/imageMagick.sh
+. ${cur_dir}/include/ionCube.sh
+. ${cur_dir}/include/apcu.sh
+. ${cur_dir}/include/php_exif.sh
+. ${cur_dir}/include/php_fileinfo.sh
+. ${cur_dir}/include/php_ldap.sh
+. ${cur_dir}/include/php_bz2.sh
+. ${cur_dir}/include/php_sodium.sh
+. ${cur_dir}/include/php_imap.sh
+. ${cur_dir}/include/php_swoole.sh
+. ${cur_dir}/include/php_SourceGuardian.sh
 
 Display_Addons_Menu()
 {

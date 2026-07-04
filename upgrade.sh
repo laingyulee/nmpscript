@@ -12,18 +12,18 @@ action=$1
 shopt -s extglob
 Upgrade_Date=$(date +"%Y%m%d%H%M%S")
 
-. lnmp.conf
-. include/version.sh
-. include/main.sh
-. include/init.sh
-. include/php.sh
-. include/nginx.sh
-. include/mariadb.sh
-. include/upgrade_nginx.sh
-. include/upgrade_php.sh
-. include/upgrade_mariadb.sh
-. include/upgrade_phpmyadmin.sh
-. include/upgrade_mphp.sh
+. ${cur_dir}/lnmp.conf
+. ${cur_dir}/include/version.sh
+. ${cur_dir}/include/main.sh
+. ${cur_dir}/include/init.sh
+. ${cur_dir}/include/php.sh
+. ${cur_dir}/include/nginx.sh
+. ${cur_dir}/include/mariadb.sh
+. ${cur_dir}/include/upgrade_nginx.sh
+. ${cur_dir}/include/upgrade_php.sh
+. ${cur_dir}/include/upgrade_mariadb.sh
+. ${cur_dir}/include/upgrade_phpmyadmin.sh
+. ${cur_dir}/include/upgrade_mphp.sh
 
 Get_Dist_Name
 Get_Dist_Version
